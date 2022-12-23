@@ -1,7 +1,7 @@
 """
 The Simplified Whiskas Model Python Formulation for the PuLP Modeller
-
 Authors: Antony Phillips, Dr Stuart Mitchell  2007
+https://coin-or.github.io/pulp/CaseStudies/a_blending_problem.html
 """
 
 # Import PuLP modeler functions
@@ -25,7 +25,7 @@ prob += 0.001 * x1 + 0.005 * x2 <= 2.0, "FibreRequirement"
 prob += 0.002 * x1 + 0.005 * x2 <= 0.4, "SaltRequirement"
 
 # The problem data is written to an .lp file
-prob.writeLP("WhiskasModel.lp")
+prob.writeLP("./python/whiskas-simple.lp")
 
 # The problem is solved using PuLP's choice of Solver
 prob.solve()

@@ -1,7 +1,7 @@
 """
 The Full Whiskas Model Python Formulation for the PuLP Modeller
-
 Authors: Antony Phillips, Dr Stuart Mitchell  2007
+https://coin-or.github.io/pulp/CaseStudies/a_blending_problem.html
 """
 
 # Import PuLP modeler functions
@@ -92,7 +92,7 @@ prob += (
 )
 
 # The problem data is written to an .lp file
-prob.writeLP("WhiskasModel2.lp")
+prob.writeLP("./python/whiskas-full.lp")
 
 # The problem is solved using PuLP's choice of Solver
 prob.solve()

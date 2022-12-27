@@ -17,8 +17,8 @@ def OzarkFarms():
 
     print('problém deklarován; jedeme:')
     # deklarovat proměnné v intervalu nula až plus nekonečno
-    corn = solver.IntVar(0, solver.infinity(), 'kukuřice')
-    soybean = solver.IntVar(0, solver.infinity(), 'soja')
+    corn = solver.IntVar(0, solver.infinity(), name = 'kukuřice')
+    soybean = solver.IntVar(0, solver.infinity(), name = 'soja')
 
     print('počet proměnných v solveru =', solver.NumVariables())
 

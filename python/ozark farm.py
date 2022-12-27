@@ -14,14 +14,15 @@ cena = {
   "soybean" : .90
 }
 
+# pravá strana převedená na levou; zbyde nula
 protein = {
-  "corn" : .09,
-  "soybean" : .60
+  "corn" : (.09 - .3),
+  "soybean" : (.60 -.3)
 }
 
 vlaknina = {
-  "corn" : .02,
-  "soybean" : .06
+  "corn" : (.02 - .05),
+  "soybean" : (.06 -.05)
 }
 
 # deklarace problému
@@ -37,11 +38,11 @@ prob += (
 )
 
 # omezující podmínky
-prob += lpSum([suroviny_prom[i] for i in suroviny]) == 800, "denni_krmna_davka"
+prob += lpSum([suroviny_prom[i] for i in suroviny]) >= 800, "denni_krmna_davka"
 
-prob += lpSum([protein[i]  * suroviny_prom[i] for i in suroviny]) >= .3 * 800, "podil_proteinu"
+prob += lpSum([protein[i]  * suroviny_prom[i] for i in suroviny]) >= 0, "podil_proteinu"
               
-prob += lpSum([vlaknina[i] * suroviny_prom[i] for i in suroviny]) <= .05 * 800, "podil_vlakniny"
+prob += lpSum([vlaknina[i] * suroviny_prom[i] for i in suroviny]) <= 0, "podil_vlakniny"
 
 # odlít definici stranou pro debug
 prob.writeLP("./python/ozark-farm.lp")

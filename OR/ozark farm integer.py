@@ -11,7 +11,7 @@ def OzarkFarmsInt():
     
     # deklarovat solver; když chyba tak konec zvonec - pozor, není GLOP!!
     solver = pywraplp.Solver('Ozark Farms integer programming problem',
-                             pywraplp.Solver.SAT_INTEGER_PROGRAMMING)
+                             pywraplp.Solver.SCIP_MIXED_INTEGER_PROGRAMMING)
     if not solver:
         return
 

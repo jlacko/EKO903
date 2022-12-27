@@ -7,7 +7,7 @@ příklad z https://is.muni.cz/www/jkrejci/Linear_Programming_orig.pdf
 from ortools.linear_solver import pywraplp
 
 # deklarovat funkci na řešení problému
-def OzarkFarms():
+def OzarkFarmsInt():
     
     # deklarovat solver; když chyba tak konec zvonec - pozor, není GLOP!!
     solver = pywraplp.Solver('Ozark Farms integer programming problem',
@@ -57,5 +57,5 @@ def OzarkFarms():
     print('Řešení nalezeno za %f milisekund' % solver.wall_time())
     print('Řešení nalezeno za %d iteratací' % solver.iterations())
 
-
-OzarkFarms()
+# funkci deklarovanou výše spustit
+OzarkFarmsInt()

@@ -57,5 +57,5 @@ def OzarkFarms():
     print('Řešení nalezeno za %f milisekund' % solver.wall_time())
     print('Řešení nalezeno za %d iteratací' % solver.iterations())
 
-
+# funkci deklarovanou výše spustit
 OzarkFarms()

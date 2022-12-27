@@ -1,5 +1,6 @@
 """
 příklad z https://is.muni.cz/www/jkrejci/Linear_Programming_orig.pdf
+řešen technikou PuLP / v OR složce analogické řešení přes Google OR
 """
 
 # načíst prostředí

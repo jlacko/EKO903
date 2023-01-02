@@ -79,6 +79,17 @@ Protože referenční hodnoty příjmu jsou formulovány v *denních* dávkách,
 
 Vlastní řešení je provedeno v jazyce python v souboru [`./OR/stigler diet jla solution.py`](https://github.com/jlacko/EKO903/blob/main/OR/stigler%20diet%20jla%20solution.py), s tím že v [`./OR/stigler diet master solution.py`](https://github.com/jlacko/EKO903/blob/main/OR/stigler%20diet%20master%20solution.py) je referenční zpracování ze [stránek Google OR Tools](https://developers.google.com/optimization/lp/stigler_diet).
 
+Řešení floating point problému jídelníčku pana Stiglera:
+
+- denní dávka *Wheat Flour (Enriched)* v $0.029519
+- denní dávka *Liver (Beef)* v $0.001893
+- denní dávka *Cabbage* v $0.011214
+- denní dávka *Spinach* v $0.005008
+- denní dávka *Navy Beans, Dried* v $0.061029
+- celková cena denní dávky = $0.108662
+
+Tj. celkové náklady v ročním ekvivalentu = $39.66
+
 Na rozdíl od referenčního řešení jsem:
 
 - tabulku potravinových komodit s nutričními hodnotami na 1 USD jsem vyčlenil do samostatného csv souboru; mít nutriční hodnoty 77 potravin natvrdo v kódu jako array je nepraktické

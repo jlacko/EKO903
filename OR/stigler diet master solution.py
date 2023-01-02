@@ -258,12 +258,6 @@ def main():
     print('\nAdvanced usage:')
     print('Problem solved in ', solver.wall_time(), ' milliseconds')
     print('Problem solved in ', solver.iterations(), ' iterations')
-    
-    # uložit lp soubor 
-    res = solver.ExportModelAsLpFormat(False)
-    soubor = open("./OR/stigler-diet.lp","w")
-    soubor.writelines(res)
-    soubor.close()
 
 
 if __name__ == '__main__':

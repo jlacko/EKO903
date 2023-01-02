@@ -8,6 +8,7 @@ import numpy as np
 from pandas import read_csv
 from ortools.linear_solver import pywraplp
 
+# definovat si funkci pro výpočet
 def StiglerDiet():
 
   # načíst podkladová data jako pandas dataframe
@@ -21,16 +22,14 @@ def StiglerDiet():
   # deklarovat solver; když chyba tak konec zvonec
   solver = pywraplp.Solver('Problém jídelníčku pana Stiglera',
                            pywraplp.Solver.GLOP_LINEAR_PROGRAMMING)
-  if not solver:
-    return
 
-  print('problém deklarován; jedeme:')
+  print('\nproblém jídelníčku pana Stiglera deklarován; jedeme:')
   
   # deklarovat proměnné - definované potraviny jako kladné floating číslo s názvem komodity
   potraviny = [solver.NumVar(0.0, solver.infinity(), item) for item in df["Commodity"]]
   print('Počet proměnných =', solver.NumVariables())
   
-  # deklarovat omezení - 9 minimálních dávek - zatím jako prázdnou množinu
+  # inicalizovat omezení (9 minimálních denních dávek);  zatím jako prázdnou množinu
   omezeni = []
 
   # kalorie mezi 3K a nekonečnem
@@ -68,8 +67,8 @@ def StiglerDiet():
   for i in range(0, pocet_potravin-1):
       omezeni[6].SetCoefficient(potraviny[i], float(df["Riboflavin (mg)"][i]))
 
-  # Niacin mezi 18 mg a nekonečnem
-  omezeni.append(solver.Constraint(18, solver.infinity(), 'denní příjem Niacinu'))
+  # Vitamín B3 mezi 18 mg a nekonečnem
+  omezeni.append(solver.Constraint(18, solver.infinity(), 'denní příjem vitamínu B3'))
   for i in range(0, pocet_potravin-1):
       omezeni[7].SetCoefficient(potraviny[i], float(df["Niacin (mg)"][i]))
 
@@ -78,13 +77,15 @@ def StiglerDiet():
   for i in range(0, pocet_potravin-1):
       omezeni[8].SetCoefficient(potraviny[i], float(df["Ascorbic Acid (mg)"][i]))
 
-  # deklarovat funkci k minimalizaci - součet jako objektivní fce
+  # omezení jsou komplet; kontrola
+  print('Počet omezujících podmínek =', solver.NumConstraints())
+  
+  # deklarovat funkci k minimalizaci - součet jednotkových cen jako objektivní fce
   objective = solver.Objective()
   for potravina in potraviny:
       objective.SetCoefficient(potravina, 1)
 
   objective.SetMinimization()
-   
 
   # uložit lp soubor pro kontrolu správnosti zadání...
   res = solver.ExportModelAsLpFormat(False)
@@ -92,10 +93,10 @@ def StiglerDiet():
   soubor.writelines(res)
   soubor.close()
 
-
   # vyřešit!
-  status = solver.Solve()
-
+  status = solver.Solve()  
+  
+  # o nalezeném řešení podat zprávu...
   if status == pywraplp.Solver.OPTIMAL:
     print('\nŘešení floating point problému jídelníčku pana Stiglera:')
     for i, potravina in enumerate(potraviny):
@@ -103,15 +104,14 @@ def StiglerDiet():
           print('- denní dávka {} v ${:.6f}'.format(df["Commodity"][i], potravina.solution_value()))
     
     print('- celková cena denní krmné dávky = ${:.6f}'.format(solver.Objective().Value()))
-    print('Tedy ročně = ${:.2f}'.format(365 * solver.Objective().Value()))
+    print('\nErgo celkové náklady v ročním ekvivalentu = ${:.2f}'.format(365 * solver.Objective().Value()))
  
   else:
     print('Ještě jednou a pořádně!.')
 
   print('\nPoučení z krizového vývoje:')
-  print('Řešení nalezeno za %f milisekund' % solver.wall_time())
-  print('Řešení nalezeno za %d iteratací' % solver.iterations())
-  
-  # o nalezeném řešení podat zprávu...
+  print('- běh solveru v čase: %f ms' % solver.wall_time())
+  print('- běh solveru v iteracích: %d' % solver.iterations())
 
+# funkce byla definována; nechť běží!  
 StiglerDiet()

@@ -25,7 +25,7 @@ prob += 0.001 * x1 + 0.005 * x2 <= 2.0, "FibreRequirement"
 prob += 0.002 * x1 + 0.005 * x2 <= 0.4, "SaltRequirement"
 
 # The problem data is written to an .lp file
-prob.writeLP("./python/whiskas-simple.lp")
+prob.writeLP("./PuLP/whiskas-simple.lp")
 
 # The problem is solved using PuLP's choice of Solver
 prob.solve()

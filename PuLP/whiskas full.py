@@ -92,7 +92,7 @@ prob += (
 )
 
 # The problem data is written to an .lp file
-prob.writeLP("./python/whiskas-full.lp")
+prob.writeLP("./PuLP/whiskas-full.lp")
 
 # The problem is solved using PuLP's choice of Solver
 prob.solve()

@@ -46,7 +46,7 @@ prob += lpSum([protein[i]  * suroviny_prom[i] for i in suroviny]) >= 0, "podil_p
 prob += lpSum([vlaknina[i] * suroviny_prom[i] for i in suroviny]) <= 0, "podil_vlakniny"
 
 # odlít definici stranou pro debug
-prob.writeLP("./python/ozark-farm.lp")
+prob.writeLP("./PuLP/ozark-farm.lp")
 
 # vyřešit!
 prob.solve()

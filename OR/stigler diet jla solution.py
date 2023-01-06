@@ -15,21 +15,21 @@ def StiglerDiet():
     diet_data = read_csv('./OR/stigler-diet.csv', delimiter=';', decimal=',')
 
     pocet_potravin = np.shape(diet_data)[0]
-  
+
     # podat zprávu o úspěšném načtení
     print(F'načteno {pocet_potravin} řádků CSV')
-    
+
     # deklarovat solver; když chyba tak konec zvonec
     solver = pywraplp.Solver('Problém jídelníčku pana Stiglera',
                            pywraplp.Solver.GLOP_LINEAR_PROGRAMMING)
 
-  
+
     print('\nproblém jídelníčku pana Stiglera deklarován; jedeme:')
-  
+
     # deklarovat proměnné - definované potraviny jako kladné floating číslo s názvem komodity
     potraviny = [solver.NumVar(0.0, solver.infinity(), item) for item in diet_data["Commodity"]]
     print('Počet proměnných =', solver.NumVariables())
-  
+
     # inicalizovat omezení (9 minimálních denních dávek);  zatím jako prázdnou množinu
     omezeni = []
 
@@ -80,7 +80,7 @@ def StiglerDiet():
 
     # omezení jsou komplet; kontrola
     print('Počet omezujících podmínek =', solver.NumConstraints())
-  
+
     # deklarovat funkci k minimalizaci - součet jednotkových cen jako objektivní fce
     objective = solver.Objective()
     for potravina in potraviny:
@@ -95,18 +95,18 @@ def StiglerDiet():
     soubor.close()
 
     # vyřešit!
-    status = solver.Solve()  
-  
+    status = solver.Solve()
+
     # o nalezeném řešení podat zprávu...
     if status == pywraplp.Solver.OPTIMAL:
         print('\nŘešení floating point problému jídelníčku pana Stiglera:')
         for i, potravina in enumerate(potraviny):
             if potravina.solution_value() > 0.0:
                 print(F'- denní dávka {diet_data["Commodity"][i]} v ${potravina.solution_value():.4f}')
-    
+
         print(F'- celková cena denní krmné dávky = ${solver.Objective().Value():.6f}')
         print(F'\nErgo celkové náklady v ročním ekvivalentu = ${365 * solver.Objective().Value():.4f}')
- 
+
     else:
         print('Ještě jednou a pořádně!.')
 
@@ -114,5 +114,5 @@ def StiglerDiet():
     print(F'- běh solveru v čase: {solver.wall_time()} ms')
     print(F'- běh solveru v iteracích: {solver.iterations()}')
 
-# funkce byla definována; nechť běží!  
+# funkce byla definována; nechť běží!
 StiglerDiet()

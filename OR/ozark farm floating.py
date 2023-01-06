@@ -8,7 +8,7 @@ from ortools.linear_solver import pywraplp
 
 # deklarovat funkci na řešení problému
 def OzarkFarms():
-    
+
     # deklarovat solver; když chyba tak konec zvonec
     solver = pywraplp.Solver('Ozark Farms floating point problem',
                              pywraplp.Solver.GLOP_LINEAR_PROGRAMMING)
@@ -27,7 +27,7 @@ def OzarkFarms():
 
     # podíl bílkovin - bez převádění pravé strany na levo
     solver.Add(.09 * corn +  .6 * soybean >= .3 * (corn + soybean), name = 'podíl bílkovin')
-    
+
     # podíl vlákniny - bez převádění pravé strany na levo
     solver.Add(.02 * corn + .06 * soybean <= .05 * (corn + soybean), name = 'podíl vlákniny')
 
@@ -44,8 +44,8 @@ def OzarkFarms():
         print(F'- cena denní krmné dávky = {solver.Objective().Value()}')
         print(F'- spotřeba liber kukuřice = {corn.solution_value()}')
         print(F'- spotřeba liber mleté sójy = {soybean.solution_value()}')
-       
-        # uložit lp soubor 
+
+        # uložit lp soubor
         res = solver.ExportModelAsLpFormat(obfuscated = False)
         soubor = open("./OR/ozark-farm-floating.lp", "w", encoding="utf-8")
         soubor.writelines(res)

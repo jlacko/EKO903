@@ -8,7 +8,7 @@ from ortools.linear_solver import pywraplp
 
 # deklarovat funkci na řešení problému
 def OzarkFarmsInt():
-    
+
     # deklarovat solver; když chyba tak konec zvonec - pozor, není GLOP!!
     solver = pywraplp.Solver('Ozark Farms integer programming problem',
                              pywraplp.Solver.SCIP_MIXED_INTEGER_PROGRAMMING)
@@ -27,7 +27,7 @@ def OzarkFarmsInt():
 
     # podíl bílkovin - bez převádění pravé strany na levo
     solver.Add(.09 * corn +  .6 * soybean >= .3 * (corn + soybean), name = 'podíl bílkovin')
-    
+
     # podíl vlákniny - bez převádění pravé strany na levo
     solver.Add(.02 * corn + .06 * soybean <= .05 * (corn + soybean), name = 'podíl vlákniny')
 
@@ -44,8 +44,8 @@ def OzarkFarmsInt():
         print(F'- cena denní krmné dávky = {solver.Objective().Value()}')
         print(F'- spotřeba liber kukuřice = {corn.solution_value()}')
         print(F'- spotřeba liber mleté sójy = {soybean.solution_value()}')
-        
-        # uložit lp soubor 
+
+        # uložit lp soubor
         res = solver.ExportModelAsLpFormat(False)
         soubor = open("./OR/ozark-farm-integer.lp", "w", encoding="utf-8")
         soubor.writelines(res)

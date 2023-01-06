@@ -20,7 +20,7 @@ def OzarkFarms():
     corn = solver.NumVar(0, solver.infinity(), name = 'kukuřice')
     soybean = solver.NumVar(0, solver.infinity(), name = 'soja')
 
-    print('počet proměnných v solveru =', solver.NumVariables())
+    print(F'počet proměnných v solveru = {solver.NumVariables()}')
 
     # denní krmná dávka alespoň...
     solver.Add(corn + soybean >= 800, name = 'objem krmné dávky')
@@ -31,7 +31,7 @@ def OzarkFarms():
     # podíl vlákniny - bez převádění pravé strany na levo
     solver.Add(.02 * corn + .06 * soybean <= .05 * (corn + soybean), name = 'podíl vlákniny')
 
-    print('počet omezení v solveru =', solver.NumConstraints())
+    print(F'počet omezení v solveru = {solver.NumConstraints()}')
 
     # deklarovat funkci k minimalizaci
     solver.Minimize(.3 * corn + .9 * soybean)
@@ -41,21 +41,21 @@ def OzarkFarms():
 
     if status == pywraplp.Solver.OPTIMAL:
         print('\nŘešení floating point problému Ozark Farm:')
-        print('- cena denní krmné dávky =', solver.Objective().Value())
-        print('- spotřeba liber kukuřice =', corn.solution_value())
-        print('- spotřeba liber mleté sójy =', soybean.solution_value())
-        
+        print(F'- cena denní krmné dávky = {solver.Objective().Value()}')
+        print(F'- spotřeba liber kukuřice = {corn.solution_value()}')
+        print(F'- spotřeba liber mleté sójy = {soybean.solution_value()}')
+       
         # uložit lp soubor 
         res = solver.ExportModelAsLpFormat(obfuscated = False)
-        soubor = open("./OR/ozark-farm-floating.lp","w")
+        soubor = open("./OR/ozark-farm-floating.lp", "w", encoding="utf-8")
         soubor.writelines(res)
         soubor.close()
     else:
         print('Ještě jednou a pořádně!.')
 
     print('\nPoučení z krizového vývoje:')
-    print('Řešení nalezeno za %f milisekund' % solver.wall_time())
-    print('Řešení nalezeno za %d iteratací' % solver.iterations())
+    print(F'Řešení nalezeno za {solver.wall_time()} milisekund')
+    print(F'Řešení nalezeno za {solver.iterations()} iteratací' )
 
 # funkci deklarovanou výše spustit
 OzarkFarms()

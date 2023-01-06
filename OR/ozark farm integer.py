@@ -40,22 +40,21 @@ def OzarkFarmsInt():
     status = solver.Solve()
 
     if status == pywraplp.Solver.OPTIMAL:
-        print('\nŘešení celočíselného problému Ozark Farm:')
-        print('- cena denní krmné dávky =', solver.Objective().Value())
-        print('- spotřeba liber kukuřice =', corn.solution_value())
-        print('- spotřeba liber mleté sójy =', soybean.solution_value())
+        print('\nŘešení floating point problému Ozark Farm:')
+        print(F'- cena denní krmné dávky = {solver.Objective().Value()}')
+        print(F'- spotřeba liber kukuřice = {corn.solution_value()}')
+        print(F'- spotřeba liber mleté sójy = {soybean.solution_value()}')
         
         # uložit lp soubor 
         res = solver.ExportModelAsLpFormat(False)
-        soubor = open("./OR/ozark-farm-integer.lp","w")
+        soubor = open("./OR/ozark-farm-integer.lp", "w", encoding="utf-8")
         soubor.writelines(res)
         soubor.close()
     else:
         print('Ještě jednou a pořádně!.')
 
     print('\nPoučení z krizového vývoje:')
-    print('Řešení nalezeno za %f milisekund' % solver.wall_time())
-    print('Řešení nalezeno za %d iteratací' % solver.iterations())
-
+    print(F'Řešení nalezeno za {solver.wall_time()} milisekund')
+    print(F'Řešení nalezeno za {solver.iterations()} iteratací' )
 # funkci deklarovanou výše spustit
 OzarkFarmsInt()

@@ -105,7 +105,7 @@ def StiglerDiet():
                 print(F'- denní dávka {diet_data["Commodity"][i]} v ${potravina.solution_value():.4f}')
 
         print(F'- celková cena denní krmné dávky = ${solver.Objective().Value():.6f}')
-        print(F'\nErgo celkové náklady v ročním ekvivalentu = ${365 * solver.Objective().Value():.4f}')
+        print(F'\nErgo celkové náklady v ročním ekvivalentu = ${365 * solver.Objective().Value():.2f}')
 
     else:
         print('Ještě jednou a pořádně!.')
